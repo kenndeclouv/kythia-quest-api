@@ -1,0 +1,22 @@
+{
+  "name": "quest-api",
+  "version": "0.0.1-beta",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "bun src/index.js",
+    "dev": "bun --watch src/index.js"
+  },
+  "keywords": [],
+  "author": {},
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@prisma/client": "^6.19.0",
+    "axios": "^1.13.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "prisma": "^6.19.0"
+  }
+}
