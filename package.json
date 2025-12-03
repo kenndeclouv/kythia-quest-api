@@ -1,15 +1,22 @@
 {
   "name": "quest-api",
   "version": "0.0.1-beta",
-  "description": "",
+  "description": "Quest API for Discord",
   "main": "index.js",
   "scripts": {
     "start": "bun src/index.js",
     "dev": "bun --watch src/index.js"
   },
-  "keywords": [],
-  "author": {},
-  "license": "ISC",
+  "keywords": [
+    "discord",
+    "quest",
+    "api"
+  ],
+  "author": {
+    "name": "kenndeclouv",
+    "email": "kenndeclouv@gmail.com"
+  },
+  "license": "MIT",
   "type": "module",
   "dependencies": {
     "@prisma/client": "^6.19.0",
