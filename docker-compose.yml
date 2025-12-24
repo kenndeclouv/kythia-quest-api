@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: quest-api-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-quest_db}
+      MYSQL_USER: ${MYSQL_USER:-quest_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-quest_password}
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - quest-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-rootpassword}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: quest-api
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DISCORD_TOKEN: ${DISCORD_TOKEN}
+      DATABASE_URL: mysql://${MYSQL_USER:-quest_user}:${MYSQL_PASSWORD:-quest_password}@mysql:3306/${MYSQL_DATABASE:-quest_db}
+      PORT: ${PORT:-3000}
+      CACHE_DURATION_MINUTES: ${CACHE_DURATION_MINUTES:-30}
+      RUST_LOG: ${RUST_LOG:-info}
+    ports:
+      - "${PORT:-3000}:3000"
+    networks:
+      - quest-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  quest-network:
+    driver: bridge

@@ -1,0 +1,41 @@
+# Rust build artifacts
+target/
+Cargo.lock
+
+# Environment files
+.env
+*.db
+*.db-shm
+*.db-wal
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+LICENSE
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node.js (old artifacts to ignore)
+node_modules/
+package.json
+package-lock.json
+bun.lock
+
+# Prisma (old artifacts)
+prisma/
+
+# Logs
+*.log
